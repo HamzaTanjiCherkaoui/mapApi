@@ -1,0 +1,22 @@
+body {
+  padding-top: 50px;
+}
+.notification {
+    right: 1%;
+    bottom: 0;
+    position: absolute;
+    width: 400px;
+}
+.thumbnail {
+    padding:0;
+    border-radius: 0;
+}
+.input-group.search input {
+    border-right:0;
+    box-shadow: none;
+}
+.input-group.search button {
+    border-left:0;
+}
+
+.angular-google-map-container { height: 400px; }

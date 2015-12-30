@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/** SCSS Règles :
+1 fichier par élément
+ex :
+ - 1 fichier bouton
+ - 1 fichier header
+ - 1 fichier titres...
+Découper les fichiers pour plus de clarté et de lisibilité
+Voir détail : http://bradfrost.com/blog/post/atomic-web-design/
+Conventions de nomages :
+- utiliser le train-case
+exemple : btn-blue
+- Utiliser l'anglais
+**/
+/** Import all elements **/
+/**
+
+  Templates : Fichiers spécifiques de chaque "vue"
+  ex : template home.scss pour quelques modifications spécifiques à la home
+
+  éviter de trop les remplir
+
+**/
+/** Import all elements **/
+footer {
+  width: 100%; }
+
+/**
+  Organisms : Gros containers (footer, header, forms...)
+**/
+
+/*# sourceMappingURL=index.css.map */

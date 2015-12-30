@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA,MAAM;EACJ,KAAK,EAAE,IAAI",
+"sources": ["organisms/footer.scss"],
+"names": [],
+"file": "index.css"
+}

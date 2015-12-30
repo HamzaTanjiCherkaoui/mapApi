@@ -1,0 +1,30 @@
+/** SCSS Règles :
+1 fichier par élément
+ex :
+ - 1 fichier bouton
+ - 1 fichier header
+ - 1 fichier titres...
+Découper les fichiers pour plus de clarté et de lisibilité
+Voir détail : http://bradfrost.com/blog/post/atomic-web-design/
+Conventions de nomages :
+- utiliser le train-case
+exemple : btn-blue
+- Utiliser l'anglais
+**/
+
+// @template : Fichiers spécifiques à une vue
+@import "../scss/templates/index";
+
+// @Organismes : Gros containers (header, footer...)
+@import "../scss/organisms/index";
+
+// @Molécules : Plus petits containers : (div...)
+@import "../scss/moleculs/index";
+
+// @Atoms : éléments HTML (buttons, liens, titres...)
+@import "../scss/atoms/index";
+
+
+
+
+

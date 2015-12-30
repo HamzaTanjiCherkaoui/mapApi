@@ -1,0 +1,179 @@
+<section id="person-controller" ng-hide="pc.personView">
+    <h1>Person list</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <button data-toggle="modal" data-target="#modalFormPerson" class="btn btn-primary" ng-click="pc.person = {}">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+
+            <button class="btn square" ng-click="pc.refresh()">
+                <i class="glyphicon glyphicon-repeat"></i>
+            </button>
+        </div>
+
+        <div class="col-md-4">
+            <div class="input-group search">
+                <!-- <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ pc.searchType }} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="pc.searchType == 'Global'">Global</a></li>
+                        <li><a ng-click="pc.searchType == 'This list'">This list</a></li>
+                    </ul>
+                </div> -->
+                <input type="text" class="form-control" ng-model="pc.searchText" placeholder="search a person" ng-change="pc.search()">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <span>{{ pc.paginator.offsetItems + 1 }} - {{ pc.paginator.limitItems }} of {{ pc.paginator.totalItems }}</span>
+
+            <div class="btn-group">
+                <button class="btn square" ng-click="pc.prevPage()" ng-disabled="pc.paginator.hasPrevPage() || pc.displayMode == 'grid'">
+                    <i class="glyphicon glyphicon-chevron-left"></i>
+                </button>
+                <button class="btn square" ng-click="pc.nextPage()" ng-disabled="pc.paginator.hasNextPage() || pc.displayMode == 'grid'">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                </button>
+            </div>
+
+            <button class="btn square" ng-click="pc.setDisplayMode('grid')" ng-disabled="pc.displayMode == 'grid'">
+                <i class="glyphicon glyphicon-th-large"></i>
+            </button>
+            <button class="btn square" ng-click="pc.setDisplayMode('list')" ng-disabled="pc.displayMode == 'list'"><i class="glyphicon glyphicon-th-list"></i></button>
+        </div>
+    </div>
+
+    <hr />
+
+    <table class="table" ng-hide="pc.displayMode == 'grid'">
+        <thead>
+            <tr>
+                <th width="30%">Name</th>
+                <th width="30%">Email</th>
+                <th width="30%">Birth date</th>
+                <th width="10%"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="person in pc.people | filter: pc.searchText">
+                <td><a href="#/persons/{{ person._id.$oid }}">{{ person.name }}</a></td>
+                <td>{{ person.email }}</td>
+                <td>{{ person.birthDate | date:shortDate }}</td>
+                <td>
+                    <button ng-click="pc.edit(person._id.$oid)" class="btn btn-default" data-toggle="modal" data-target="#modalFormPerson">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                    </button>
+                    <button ng-click="pc.remove(person._id.$oid)" class="btn btn-default">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div ng-show="pc.displayMode == 'grid'">
+        <div class="row">
+            <div class="col-sm-6 col-md-3" ng-repeat="person in pc.people | filter:pc.searchText">
+                <div class="thumbnail">
+                    <a href="#/persons/{{ person._id.$oid }}">
+                        <img src="http://lorempixel.com/400/200/?{{ person._id.$oid }}" alt="...">
+                    </a>
+                    <div class="caption">
+                        <h4>{{ person.name | limitTo : 25}}</h4>
+                        <p>{{ person.email }}</p>
+                        <p>
+                            <button ng-click="pc.edit(person._id.$oid)" class="btn btn-primary" data-toggle="modal" data-target="#modalFormPerson">
+                                Update
+                            </button>
+                            <button class="btn btn-default" ng-click="pc.remove(person._id.$oid)">Delete</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1 col-md-offset-6">
+                <!-- <div data-progress-bar></div> -->
+                <img src="assets/img/loader-bar.gif" alt="" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section ng-show="pc.personView">
+    <div class="jumbotron" style="border-radius:0;background:url(http://lorempixel.com/1400/400/abstract?{{ pc.person._id.$oid }}); text-align:center" >
+        <img src="http://lorempixel.com/150/150/people?{{ pc.person._id.$oid }}" alt="" style="border-radius:50%"/>
+        <h3 style="color:white">{{ pc.person.name }}</h3>
+    </div>
+    <nav class="navbar navbar-default" style="margin-top:-30px;border-radius:0;">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="modalFormPerson" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add new person</h4>
+            </div>
+            <div class="modal-body">
+                <form name="formCreatePerson">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" ng-model="pc.person.name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" placeholder="Email" ng-model="pc.person.email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthDate">Bith date</label>
+                        <input type="text" class="form-control" id="birthDate" placeholder="Birth date" ng-model="pc.person.birthDate">
+                        <p class="help-block">Example 01-01-1970</p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-show="pc.person._id.$oid" ng-click="pc.remove(pc.person._id.$oid)">
+                    <span class="glyphicon glyphicon-trash"></span> Remove
+                </button>
+                <button type="button" ng-click="pc.save(pc.person._id.$oid)" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

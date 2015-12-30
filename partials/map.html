@@ -1,0 +1,61 @@
+<h1>Map</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form name="personFrom" role="form" ng-submit="search()">
+            <div class="form-group">
+                <label for="location">Address</label>
+                <google-places location="location"></google-places>
+            </div>
+            <div class="form-group">
+                <label for="rooms">Number of rooms</label>
+                <select class="form-control" ng-model="entity.rooms" ng-options="o for o in [1, 2, 3, 4]">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="buildingPeriod ">Building period </label>
+                <select class="form-control" ng-model="entity.buildingPeriod"
+                ng-options="o for o in ['inf1946', 'sup1990', '1946-1990', '1946-1970', '1971-1990', 'sup1990']">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="buildingPeriod ">Kind of location</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="optionsRadios" ng-model="entity.kindOfLocation" value="furnished" checked>furnished
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="optionsRadios" ng-model="entity.kindOfLocation" value="unfurnished">unfurnished
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="flatSize">flat's size</label>
+                <input type="number" class="form-control" ng-model="entity.flatSize" placeholder="flatSize">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <div class="well">
+            <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true">
+                <ui-gmap-polygon ng-repeat="p in polygonList track by $index" path="p.path" stroke="p.stroke" fill="p.fill" fit="false">
+                </ui-gmap-polygon>
+                <ui-gmap-markers models="markersList" coords="'self'" icon="'icon'">
+                    <ui-gmap-windows show="show">
+                        <div ng-non-bindable>
+                            <h4>{{data.nameZone}}</h4>
+                            <ul class="list-unstyled">
+                                <li><b>Rooms :</b> {{ data.piece }}</li>
+                                <li><b>Period :</b> {{ data.epoque }}</li>
+                                <li><b>Type :</b> {{ data.type }}</li>
+                                <li><b>Price :</b> {{ data.ref }}</li>
+                            </ul>
+                        </div>
+                    </ui-gmap-windows>
+                </ui-gmap-markers>
+            </ui-gmap-google-map>
+        </div>
+    </div>
+</div>
