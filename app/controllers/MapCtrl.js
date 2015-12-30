@@ -42,6 +42,7 @@
                     $scope.markersList = [];
 
                     Place.getPlaces(query).then(function(data) {
+                        data.features = data.features.slice(0, 10);
                         $.each(data.features, function(i, item) {
                             //add plygons
                             var polygon = {
