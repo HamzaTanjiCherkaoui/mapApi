@@ -1,7 +1,7 @@
 <h1>Map</h1>
 <div class="row">
-    <div class="col-md-4">
-        <form name="personFrom" role="form" ng-submit="search()">
+    <div class="col-md-3">
+        <form name="personFrom" role="form" ng-submit="search()" class="well">
             <div class="form-group">
                 <label for="location">Address</label>
                 <google-places location="location"></google-places>
@@ -13,8 +13,12 @@
             </div>
             <div class="form-group">
                 <label for="buildingPeriod ">Building period </label>
-                <select class="form-control" ng-model="entity.buildingPeriod"
-                ng-options="o for o in ['inf1946', 'sup1990', '1946-1990', '1946-1970', '1971-1990', 'sup1990']">
+                <select class="form-control" ng-model="entity.buildingPeriod">
+                    <option value="inf1946">before 1946</option>
+                    <option value="1946-1970">1946-1970</option>
+                    <option value="1971-1990">1971-1990</option>
+                    <option value="1946-1990">1946-1990</option>
+                    <option value="sup1990">after 1990</option>
                 </select>
             </div>
             <div class="form-group">
@@ -31,31 +35,47 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="flatSize">flat's size</label>
+                <label for="flatSize">flat's size (meters)</label>
                 <input type="number" class="form-control" ng-model="entity.flatSize" placeholder="flatSize">
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
-    <div class="col-md-8">
-        <div class="well">
-            <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true">
-                <ui-gmap-polygon ng-repeat="p in polygonList track by $index" path="p.path" stroke="p.stroke" fill="p.fill" fit="false">
-                </ui-gmap-polygon>
-                <ui-gmap-markers models="markersList" coords="'self'" icon="'icon'">
-                    <ui-gmap-windows show="show">
-                        <div ng-non-bindable>
-                            <h4>{{data.nameZone}}</h4>
+    <div class="col-md-9">
+        <div class="">
+            <ui-gmap-google-map id="map" center="map.center" pan="map.pan" zoom="map.zoom" draggable="true" refresh="map.refresh" options="map.options" events="map.events" bounds="map.bounds">
+                <ui-gmap-polygons models="map.polys" path='"path"' fill="map.getPolyFill" stroke="'stroke'" events="map.polyEvents" visible="true" geodesic="true" fit="false" editable="false" static="true" ng-cloak="">
+                    <ui-gmap-window show="polywindow.show" coords="polywindow.coords" closeclick="polywindow.closeClick()">
+                        <div>
+                            <h4>{{polywindow.data.nameZone}}</h4>
                             <ul class="list-unstyled">
-                                <li><b>Rooms :</b> {{ data.piece }}</li>
-                                <li><b>Period :</b> {{ data.epoque }}</li>
-                                <li><b>Type :</b> {{ data.type }}</li>
-                                <li><b>Price :</b> {{ data.ref }}</li>
+                                <li><b>Rooms :</b> {{ polywindow.data.piece }}</li>
+                                <li><b>Period :</b> {{ polywindow.data.epoque }}</li>
+                                <li><b>Type :</b> {{ polywindow.data.type }}</li>
+                                <li><b>Price :</b> {{ polywindow.data.ref }}</li>
+                                <li><b>Price min:</b> {{ polywindow.data.refmin }}</li>
+                                <li><b>Price max:</b> {{ polywindow.data.refmaj }}</li>
                             </ul>
                         </div>
-                    </ui-gmap-windows>
-                </ui-gmap-markers>
+                    </ui-gmap-window>
+                </ui-gmap-polygons>
             </ui-gmap-google-map>
         </div>
+
+    <div class="">
+        <br>
+        <div class="alert alert-success" role="alert">
+            Loyer de référence médian (hors charges) {{ currentPrice.median }} €/m²
+        </div>
+        <div class="alert alert-success" role="alert">
+            Loyer de référence majoré (hors charges) {{ currentPrice.max }} €/m²
+        </div>
+        <div class="alert alert-info" role="alert">
+            Loyer constaté moyen (charges comprises) {{ currentPrice.min }} €/m²
+        </div>
+        <div class="alert alert-info" role="alert">
+             Loyer de référence réel (hors charges) {{ currentPrice.global }} €
+        </div>
+    </div>
     </div>
 </div>

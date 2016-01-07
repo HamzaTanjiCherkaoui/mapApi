@@ -10,7 +10,6 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
-<script type="text/javascript" src="quartier.js"></script>
 <script type="text/javascript">
     //les quartiers sont dÃ©finis dans quartiers.js on les assigne Ã  un polygone
 
@@ -46,8 +45,9 @@
             "#style13"  : "#4AB76C"
         };
 
-        $.ajax('getdata/json/drihl_1_meuble_1946-1970.json').done(function(json) {
+        $.ajax('/server/json/drihl_1_meuble_1946-1970.json').done(function(json) {
             var polygones = [];
+            json = JSON.parse(json);
 
             json.features.forEach(function (element, index) {
 

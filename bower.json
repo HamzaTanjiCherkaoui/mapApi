@@ -20,6 +20,7 @@
     "bootstrap": "~3.3.5",
     "restangular": "~1.5.1",
     "underscore": "~1.8.3",
-    "angular-google-maps": "~2.2.1"
+    "angular-google-maps": "~2.2.1",
+    "angular-bindonce": "~0.3.3"
   }
 }

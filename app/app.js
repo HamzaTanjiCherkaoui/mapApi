@@ -2,14 +2,14 @@ var app = (function() {
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'app.person', 'uiGmapgoogle-maps'])
+        .module('app', ['ngRoute', 'app.person', 'uiGmapgoogle-maps', 'pasvaz.bindonce'])
         .config(config);
 
     function config($routeProvider, RestangularProvider, uiGmapGoogleMapApiProvider) {
         uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyATIKqJAOJrzmO9yhyIkamolOX0a8Xi2xg',
             v: '3.20', //defaults to latest 3.X anyhow
-            libraries: 'weather,geometry,visualization'
+            libraries: 'geometry'
         });
         $routeProvider.
         when('/', {
