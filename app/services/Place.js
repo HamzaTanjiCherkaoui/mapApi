@@ -7,7 +7,7 @@
             getPlaces: function(query) {
                 return $http.get('server/json/' + query)
                     .then(function(result) {
-                        console.log(result.data);
+                        //console.log(result.data);
                         return result.data;
                     });
             }

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Map</title>
+</head>
+<body>
+
+<div style="width: 100%; height:800px;" id="mapdiv"></div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+<script type="text/javascript" src="quartier.js"></script>
+<script type="text/javascript">
+    //les quartiers sont dÃ©finis dans quartiers.js on les assigne Ã  un polygone
+
+    $(document).ready(function() {
+
+        var center = new google.maps.LatLng(48.858789, 2.346980);
+        var zoom = 12;
+
+        var map = new google.maps.Map(document.getElementById('mapdiv'), {
+            center: center,
+            zoom: zoom,
+            mapTypeId: 'roadmap'
+        });
+
+        var colors = {
+            '#style2'   : "#FC4A4A",
+            "#style1"   : "#FC4A4A",
+            "#style4"   : "#FC4A4A",
+
+            "#style3"   : "#FDA44B",
+            "#style8"   : "#FDA44B",
+            "#style6"   : "#FDA44B",
+
+            "#style7"   : "#FDE24B",
+            "#style10"  : "#FDE24B",
+            "#style5"   : "#FDE24B",
+
+            "#style12"  : "#E2FD4B",
+            "#style14"  : "#E2FD4B",
+            "#style11"  : "#E2FD4B",
+
+            "#style9"   : "#4AB76C",
+            "#style13"  : "#4AB76C"
+        };
+
+        $.ajax('getdata/json/drihl_1_meuble_1946-1970.json').done(function(json) {
+            var polygones = [];
+
+            json.features.forEach(function (element, index) {
+
+                var coords = [];
+                element.geometry.coordinates[0].forEach(function (elem, index) {
+                    // console.log(elem[index][0]);
+                    coords.push(new google.maps.LatLng(elem[1], elem[0]));
+                });
+
+                polygones[index] = new google.maps.Polygon({
+                    paths: coords,
+                    strokeColor: 'black',
+                    strokeOpacity: 0.1,
+                    strokeWeight: 1,
+                    fillColor: colors[element.properties.styleUrl],
+                    fillOpacity:0.7
+                });
+
+                polygones[index].setMap(map);
+            });
+        });
+    });
+</script>
+</body>
+</html>

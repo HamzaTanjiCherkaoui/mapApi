@@ -42,9 +42,18 @@
                     $scope.markersList = [];
 
                     Place.getPlaces(query).then(function(data) {
-                        data.features = data.features.slice(0, 10);
-                        $.each(data.features, function(i, item) {
+                      //  data.features = data.features.slice(0, 15);
+                        /* for(var i = 0;i<data.features.length;i++){
+                         var item = data.features[i];
+                         }*/
+
+                        var time = Math.floor(Date.now() / 1000);
+                        for(var i = 0;i<data.features.length;i++){
+                            var item = data.features[i];
+                            //$.each(data.features, function(i, item) {
                             //add plygons
+                           // console.log(item);
+
                             var polygon = {
                                 stroke: {
                                     color: '#603455',
@@ -56,6 +65,7 @@
                                     opacity: 0.5
                                 }
                             };
+
                             polygon.path = $.map(item.geometry.coordinates[0], function(elem) {
                                 return {
                                     latitude: parseFloat(elem[1]),
@@ -70,7 +80,7 @@
                                 marker.data = item.properties;
                                 $scope.markersList.push(marker);
                             }
-                        });
+                        }
                     });
                 }
             });
